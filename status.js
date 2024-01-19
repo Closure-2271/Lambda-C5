@@ -6,7 +6,7 @@ const setStatus = (client) => {
   
   const setActivity = () => {
     const statuses = [
-      '/help 获取周常更新时间!',
+      '/weekupdate 获取周常更新时间!',
       '最喜欢可露希尔小姐了...',
     ];
 

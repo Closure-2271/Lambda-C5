@@ -44,7 +44,7 @@ setStatus(client);
 async function updateCountdown(message, timeUntilWednesday) {
   const countdownEmbed = {
     description: '周常更新时间剩余:',
-    color: 0x3498db, // 设置颜色，可以根据需要调整
+    color: 0x00FFFF, // 设置颜色，可以根据需要调整
   };
 
   const countdownMessage = await message.reply({
@@ -66,10 +66,8 @@ async function updateCountdown(message, timeUntilWednesday) {
         description: `周常更新时间剩余: ${days}d ${hours}h ${minutes}m ${seconds}s :clock1:`,
       }],
     });
-
     // Wait for 1 second
     await setTimeout(1000);
-
     // Recalculate the time remaining
     timeUntilWednesday -= 1000;
   }
@@ -87,15 +85,12 @@ client.on('interactionCreate', async (interaction) => {
   const { commandName } = interaction;
 
   if (commandName === 'weekupdate') {
-    // Triggered by the slash command '/weekupdate'
 
-    // Displaying a status with a countdown
     await updateCountdown(interaction, calculateTimeUntilWednesday());
   }
 });
 
 function calculateTimeUntilWednesday() {
-  // Calculate the time until the next Wednesday at 1 AM (Chinese time)
   const now = new Date();
   const nextWednesday = new Date(now);
   nextWednesday.setDate(now.getDate() + ((3 + 7 - now.getDay()) % 7));
