@@ -3,6 +3,7 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const setStatus = require('./status');
 const { token } = require('./config.json');
+const { sendLanguageSelection, handleLanguageSelection } = require('./language');
 
 const client = new Client({
   intents: [
@@ -39,12 +40,14 @@ client.once('ready', () => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
+  if (interaction.type === InteractionType.ApplicationCommand) {
+    const { commandName } = interaction;
 
-  const { commandName } = interaction;
-
-  if (commandName === 'weekupdate') {
-    await startCountdown(interaction, calculateTimeUntilWednesday());
+    if (commandName === 'weekupdate') {
+      await startCountdown(interaction, calculateTimeUntilWednesday());
+    }
+  } else if (interaction.type === InteractionType.MessageComponent) {
+    await handleLanguageSelection(interaction);
   }
 });
 
